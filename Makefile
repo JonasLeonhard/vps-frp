@@ -56,7 +56,7 @@ client-init:
 		gzip -d frpc.tar.gz && \
 		mkdir frpc &&  tar -xf frpc.tar -C ./frpc --strip-components 1 && \
 		rm frpc.tar && \
-		mv ./frpc/frps ./config/frpc && \
+		mv ./frpc/frpc ./config/frpc && \
 		rm -rf frpc; \
 	else \
 		echo '🐲 Skipped initialize Client, ./config/frpc exec already exists'; \
