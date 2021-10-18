@@ -19,7 +19,7 @@ server-env:
 	if [ "$$RESET" == "RESET" ]; then \
 		cp ./config/.env.server.example ./config/.env.server ; \
 	fi
-	if [ ! -f "./config/.env.server" ]; then \
+	@if [ ! -f "./config/.env.server" ]; then \
 		cp ./config/.env.server.example ./config/.env.server ; \
 	fi
 	vim ./config/.env.server ; \
@@ -29,7 +29,7 @@ client-env:
 	if [ "$$RESET" == "RESET" ]; then \
 		cp ./config/.env.client.example ./config/.env.client ; \
 	fi
-	if [ ! -f "./config/.env.client" ]; then \
+	@if [ ! -f "./config/.env.client" ]; then \
 		cp ./config/.env.client.example ./config/.env.client ; \
 	fi
 	vim ./config/.env.client ; \
@@ -63,13 +63,8 @@ client-init:
 server-start:
 	@echo '🐲 Starting FRPS'
 	@if [ -f "./config/.env.server" ]; then \
-		export FRP_SERVER_ADDR=$(FRP_SERVER_ADDR) && \
-		export FRP_SERVER_PORT=$(FRP_SERVER_PORT) && \
-		export FRP_SERVER_TOKEN=$(FRP_SERVER_TOKEN) && \
-		export FRP_SERVER_SSH_TYPE=$(FRP_SERVER_SSH_TYPE) && \
-		export FRP_SERVER_SSH_LOCAL_PORT=$(FRP_SERVER_SSH_LOCAL_PORT) && \
-		export FRP_SERVER_SSH_LOCAL_IP=$(FRP_SERVER_SSH_LOCAL_IP) && \
-		export FRP_SERVER_SSH_REMOTE_PORT=$(FRP_SERVER_SSH_REMOTE_PORT) && \
+		export FRP_CLIENT_BIND_PORT=$(FRP_CLIENT_BIND_PORT) && \
+		export FRP_CLIENT_TOKEN=$(FRP_CLIENT_TOKEN) && \
 		./config/frps -c ./config/frps.ini ; \
 	else \
 		echo '🐲 Missing .env.server file in config. Create on by running server-init'; \
@@ -79,7 +74,13 @@ server-start:
 client-start:
 	@echo '🐲 Starting FRPC';
 	@if [ -f "./config/.env.client" ]; then \
-		export FRP_CLIENT_BIND_PORT=$(FRP_CLIENT_BIND_PORT) && \
+		export FRP_SERVER_ADDR=$(FRP_SERVER_ADDR) && \
+		export FRP_SERVER_PORT=$(FRP_SERVER_PORT) && \
+		export FRP_SERVER_TOKEN=$(FRP_SERVER_TOKEN) && \
+		export FRP_SERVER_SSH_TYPE=$(FRP_SERVER_SSH_TYPE) && \
+		export FRP_SERVER_SSH_LOCAL_PORT=$(FRP_SERVER_SSH_LOCAL_PORT) && \
+		export FRP_SERVER_SSH_LOCAL_IP=$(FRP_SERVER_SSH_LOCAL_IP) && \
+		export FRP_SERVER_SSH_REMOTE_PORT=$(FRP_SERVER_SSH_REMOTE_PORT) && \
 		./config/frpc -c ./config/frpc.ini ; \
 	else \
 		echo '🐲 Missing .env.client file in config. Create on by running client-init'; \
