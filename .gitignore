@@ -1,2 +1,6 @@
 frps
+frpc
+.env
+.env.client
+.env.server
 .vscode
