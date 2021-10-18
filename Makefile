@@ -17,6 +17,7 @@ help:
 server-env: 
 	@read -p "reset .env type 'RESET', else continue (RESET|*)? : " RESET && \
 	if [ "$$RESET" == "RESET" ]; then \
+		rm ./config/.env.server && \
 		cp ./config/.env.server.example ./config/.env.server ; \
 	fi
 	@if [ ! -f "./config/.env.server" ]; then \
@@ -27,6 +28,7 @@ server-env:
 client-env: 
 	@read -p "reset .env type 'RESET', else continue (RESET|*)? : " RESET && \
 	if [ "$$RESET" == "RESET" ]; then \
+		rm ./config/.env.client && \
 		cp ./config/.env.client.example ./config/.env.client ; \
 	fi
 	@if [ ! -f "./config/.env.client" ]; then \
